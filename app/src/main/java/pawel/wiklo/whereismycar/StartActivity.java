@@ -1,6 +1,7 @@
 package pawel.wiklo.whereismycar;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +19,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.orm.SugarContext;
+
+import java.util.List;
 
 public class StartActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -102,27 +106,41 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
                 mMap.animateCamera(zoom);
 
                 Log.v("Map", mp.getPosition().toString());
-                tv1.setText(tv1.getText()+"\n"+mp.getPosition().latitude);
-                tv2.setText(tv2.getText()+"\n"+mp.getPosition().longitude);
+                //tv1.setText(tv1.getText()+"\n"+mp.getPosition().latitude);
+                //tv2.setText(tv2.getText()+"\n"+mp.getPosition().longitude);
+
+                lat = mp.getPosition().latitude;
+                lon = mp.getPosition().longitude;
 
             }
         });
     }
 
     private void getLocation() {
-        GPStracker g = new GPStracker(getApplicationContext());
-        Location l = g.getLocation();
-        if(l!=null)
-        {
-            lat = l.getLatitude();
-            lon = l.getLongitude();
-            tv1.setText(tv1.getText()+"\n"+lat);
-            tv2.setText(tv2.getText()+"\n"+lon);
+//        GPStracker g = new GPStracker(getApplicationContext());
+//        Location l = g.getLocation();
+//        if(l!=null)
+//        {
+//            lat = l.getLatitude();
+//            lon = l.getLongitude();
+//            tv1.setText(tv1.getText()+"\n"+lat);
+//            tv2.setText(tv2.getText()+"\n"+lon);
+//
+//
+//            LatLng newPosition = new LatLng(lat, lon);
+//            mMap.addMarker(new MarkerOptions().position(newPosition).title("Your Position"));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(newPosition));
+//        }
+        //SugarContext.init(this);
+        //DataBaseValues newEntry = new DataBaseValues(lat,lon,"data","name");
+        //newEntry.save();
+        Intent intent = new Intent(this, ListOfAll.class);
+        startActivity(intent);
+
+//        SugarContext.init(this);
+//        DataBaseValues dbv = new DataBaseValues(0.01,0.02,"aaa","bbb");
+//        dbv.save();
 
 
-            LatLng newPosition = new LatLng(lat, lon);
-            mMap.addMarker(new MarkerOptions().position(newPosition).title("Your Position"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(newPosition));
-        }
     }
 }
