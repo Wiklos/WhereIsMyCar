@@ -35,10 +35,19 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 
     private Button myButton;
 
-    private View.OnClickListener awesomeOnClickListener = new View.OnClickListener() {
+    private Button goToListActivityButton;
+
+    private View.OnClickListener addNewPosition = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getLocation();
+        }
+    };
+
+    private View.OnClickListener gotoList = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            goToListActivity();
         }
     };
 
@@ -59,7 +68,10 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
         ActivityCompat.requestPermissions(StartActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
 
         myButton = (Button)findViewById(R.id.button);
-        myButton.setOnClickListener(awesomeOnClickListener);
+        myButton.setOnClickListener(addNewPosition);
+
+        goToListActivityButton = (Button)findViewById(R.id.goToListActivityButton);
+        goToListActivityButton.setOnClickListener(gotoList);
     }
 
 
@@ -134,8 +146,8 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
         //SugarContext.init(this);
         //DataBaseValues newEntry = new DataBaseValues(lat,lon,"data","name");
         //newEntry.save();
-        Intent intent = new Intent(this, ListOfAll.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, ListOfAll.class);
+        //startActivity(intent);
 
 //        SugarContext.init(this);
 //        DataBaseValues dbv = new DataBaseValues(0.01,0.02,"aaa","bbb");
@@ -143,4 +155,10 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 
 
     }
+private void goToListActivity()
+{
+    Intent intent = new Intent(this, ListOfAll.class);
+    startActivity(intent);
+}
+
 }
