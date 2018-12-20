@@ -126,6 +126,17 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 
             }
         });
+
+        MarkerOptions mp2 = new MarkerOptions();
+        mp2.position(new LatLng(51.78560, 19.40));
+        mp2.title("New Marker2");
+        mMap.addMarker(mp2);
+
+
+        MarkerOptions mp3 = new MarkerOptions();
+        mp3.position(new LatLng(51.68560, 19.40));
+        mp3.title("New Marker3");
+        mMap.addMarker(mp3);
     }
 
     private void getLocation() {
