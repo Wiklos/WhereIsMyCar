@@ -15,7 +15,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/article_title"
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
@@ -23,7 +23,33 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/article_subtitle"
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Subtitle"
+            android:textColor="#888"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Subtitle"
+            android:textColor="#888"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/lat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Subtitle"
+            android:textColor="#888"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/lon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

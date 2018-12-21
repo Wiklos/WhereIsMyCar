@@ -21,15 +21,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView txtHeader;
-        public TextView txtFooter;
+        public TextView txtDate;
+        public TextView txtName;
+        public TextView txtId;
+        public TextView txtLat;
+        public TextView txtLon;
         public View layout;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
-            txtHeader = (TextView) v.findViewById(R.id.article_title);
-            txtFooter = (TextView) v.findViewById(R.id.article_subtitle);
+            txtDate = (TextView) v.findViewById(R.id.date);
+            txtName = (TextView) v.findViewById(R.id.name);
+            txtId = (TextView) v.findViewById(R.id.id);
+            txtLat = (TextView) v.findViewById(R.id.lat);
+            txtLon = (TextView) v.findViewById(R.id.lon);
         }
     }
 
@@ -69,15 +75,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         final String name = String.valueOf(values.get(position));
         final DataBaseValues item = values.get(position);
-        holder.txtHeader.setText(item.getData());
-        holder.txtHeader.setOnClickListener(new View.OnClickListener() {
+        holder.txtDate.setText(item.getData());
+        holder.txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 remove(position);
             }
         });
-
-        holder.txtFooter.setText("Footer: " + item.getId());
+        holder.txtName.setText("Name: " + item.getNazwa());
+        holder.txtId.setText("Id: " + item.getId());
+        holder.txtLat.setText("Lat: " + item.getLat());
+        holder.txtLon.setText("Lon: " + item.getLon());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -30,7 +30,7 @@ public class ListOfAll extends AppCompatActivity {
 
         for (DataBaseValues value : myList)
         {
-            tv.setText(tv.getText()+"\n"+value.getData()+" "+value.getLat()+" "+value.getLen());
+            tv.setText(tv.getText()+"\n"+value.getData()+" "+value.getLat()+" "+value.getLon());
         }
 
 

@@ -30,6 +30,8 @@ import java.util.List;
 
 public class StartActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private MarkerOptions markers = new MarkerOptions();
+
     double lat;
     double lon;
 
@@ -114,6 +116,7 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 MarkerOptions mp = new MarkerOptions();
 
+
                 mp.position(new LatLng(location.getLatitude(), location.getLongitude()));
 
                 mp.title("Current Poition");
@@ -132,16 +135,29 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
             }
         });
 
-        MarkerOptions mp2 = new MarkerOptions();
-        mp2.position(new LatLng(51.78560, 19.40));
-        mp2.title("New Marker2");
-        mMap.addMarker(mp2);
+//        MarkerOptions mp2 = new MarkerOptions();
+//        mp2.position(new LatLng(51.1256, 20.863033));
+//        mp2.title("New Marker2");
+//        mMap.addMarker(mp2);
 
 
-        MarkerOptions mp3 = new MarkerOptions();
-        mp3.position(new LatLng(51.68560, 19.40));
-        mp3.title("New Marker3");
-        mMap.addMarker(mp3);
+//        MarkerOptions mp3 = new MarkerOptions();
+//        mp3.position(new LatLng(51.1256500, 20.8759));
+//        mp3.title("New Marker3");
+//        mMap.addMarker(mp3);
+
+
+        SugarContext.init(this);
+        List<DataBaseValues> myList = DataBaseValues.listAll(DataBaseValues.class);
+
+        for (DataBaseValues value : myList)
+        {
+            //TODO if nazwa == empty or sth then title is date
+            markers.position(new LatLng(value.getLat(), value.getLon()));
+            markers.title(value.getNazwa());
+            markers.snippet(value.getData());
+            googleMap.addMarker(markers);
+        }
 
 
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -194,16 +210,21 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 //        }
 
 
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
 
-        Toast toast = Toast.makeText(this, dateFormat.format(date), Toast.LENGTH_LONG);
-        toast.show();
+//        Toast toast = Toast.makeText(this, dateFormat.format(date), Toast.LENGTH_LONG);
+//        toast.show();
 
-        SugarContext.init(this);
-        DataBaseValues dbv = new DataBaseValues(lat,lon,dateFormat.format(date),"Edytuj");
-        dbv.save();
+//        SugarContext.init(this);
+//        DataBaseValues dbv = new DataBaseValues(51.1256500,20.8759,dateFormat.format(date),"Testowy2");
+//        dbv.save();
+
+
+        //Toast toast = Toast.makeText(this, dbv.getLat()+" - "+dbv.getLon()+" - "+dbv.getNazwa()+" - "+dbv.getData()+" - "+dbv.getId(), Toast.LENGTH_LONG);
+        //toast.show();
 
 
     }
@@ -214,3 +235,16 @@ private void goToListActivity()
 }
 
 }
+
+
+//TODO
+/*
+New activity, accesable from clicking item from list, or clicking name field on map.
+
+New activity:
+Have map, distance, and path to the location.
+Have name, which you can edit, delete button.
+
+Removing current location marker when new appeard.
+On map, name field, showing date when name is not set.
+*/
