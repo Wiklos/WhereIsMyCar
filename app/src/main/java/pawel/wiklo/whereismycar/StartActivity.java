@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,9 +19,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.orm.SugarContext;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class StartActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -114,8 +119,8 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
                 mp.title("Current Poition");
 
                 mMap.addMarker(mp);
-                mMap.moveCamera(center);
-                mMap.animateCamera(zoom);
+                //mMap.moveCamera(center);
+                //mMap.animateCamera(zoom);
 
                 Log.v("Map", mp.getPosition().toString());
                 //tv1.setText(tv1.getText()+"\n"+mp.getPosition().latitude);
@@ -137,6 +142,23 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
         mp3.position(new LatLng(51.68560, 19.40));
         mp3.title("New Marker3");
         mMap.addMarker(mp3);
+
+
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+            @Override
+            public void onInfoWindowClick(Marker arg0) {
+                // TODO Auto-generated method stub
+
+                Toast toast = Toast.makeText(getApplicationContext(), arg0.getPosition().toString(), Toast.LENGTH_LONG);
+                toast.show();
+
+
+
+            }
+        });
+
+
     }
 
     private void getLocation() {
@@ -163,6 +185,25 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 //        SugarContext.init(this);
 //        DataBaseValues dbv = new DataBaseValues(0.01,0.02,"aaa","bbb");
 //        dbv.save();
+
+//        SugarContext.init(this);
+//        for(int i = 1;i<10;i++)
+//        {
+//            DataBaseValues book = DataBaseValues.findById(DataBaseValues.class, i);
+//            book.delete();
+//        }
+
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+
+        Toast toast = Toast.makeText(this, dateFormat.format(date), Toast.LENGTH_LONG);
+        toast.show();
+
+        SugarContext.init(this);
+        DataBaseValues dbv = new DataBaseValues(lat,lon,dateFormat.format(date),"Edytuj");
+        dbv.save();
 
 
     }

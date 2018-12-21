@@ -77,7 +77,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
         });
 
-        holder.txtFooter.setText("Footer: " + item.getData());
+        holder.txtFooter.setText("Footer: " + item.getId());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
