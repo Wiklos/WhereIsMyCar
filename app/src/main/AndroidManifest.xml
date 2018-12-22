@@ -54,7 +54,11 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="pawel.wiklo.whereismycar" />
-        <activity android:name=".ListOfAll"></activity>
+
+        <activity android:name=".ListOfAll" />
+        <activity
+            android:name=".DetailedInfo"
+            android:label="@string/title_activity_detailed_info"></activity>
     </application>
 
 </manifest>

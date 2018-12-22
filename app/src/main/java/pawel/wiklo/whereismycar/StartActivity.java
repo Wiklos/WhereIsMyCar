@@ -166,8 +166,15 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
             public void onInfoWindowClick(Marker arg0) {
                 // TODO Auto-generated method stub
 
-                Toast toast = Toast.makeText(getApplicationContext(), arg0.getPosition().toString(), Toast.LENGTH_LONG);
-                toast.show();
+//                Toast toast = Toast.makeText(getApplicationContext(), arg0.getPosition().toString(), Toast.LENGTH_LONG);
+//                toast.show();
+
+                Intent intent = new Intent(getApplicationContext(), DetailedInfo.class);
+                intent.putExtra("name", arg0.getTitle());
+                intent.putExtra("date", arg0.getSnippet());
+                intent.putExtra("lat", arg0.getPosition().latitude);
+                intent.putExtra("lon", arg0.getPosition().longitude);
+                startActivity(intent);
 
 
 
@@ -247,4 +254,6 @@ Have name, which you can edit, delete button.
 
 Removing current location marker when new appeard.
 On map, name field, showing date when name is not set.
+
+Option to hide hour on marker.
 */

@@ -79,7 +79,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(position);
+                //remove(position);
+
+
+                DataBaseValues value = DataBaseValues.findById(DataBaseValues.class, item.getId());
+
+                Intent intent = new Intent(v.getContext(), DetailedInfo.class);
+                intent.putExtra("name", value.getNazwa());
+                intent.putExtra("date", value.getData());
+                intent.putExtra("lat", value.getLat());
+                intent.putExtra("lon", value.getLon());
+                v.getContext().startActivity(intent);
+
+//                Intent intent = new Intent(v.getContext(), DetailedInfo.class);
+//
+//                v.getContext().startActivity(intent);
             }
         });
         holder.txtName.setText("Name: " + item.getNazwa());
