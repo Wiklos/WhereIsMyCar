@@ -30,7 +30,10 @@ import java.util.List;
 
 public class StartActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    boolean prepareMap = true;
+
     private MarkerOptions markers = new MarkerOptions();
+    private Marker mPreviousMarker ;
 
     double lat;
     double lon;
@@ -121,9 +124,20 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 mp.title("Current Poition");
 
-                mMap.addMarker(mp);
-                //mMap.moveCamera(center);
-                //mMap.animateCamera(zoom);
+                if (mPreviousMarker != null) {
+                    mPreviousMarker.remove();
+
+                }
+
+                mPreviousMarker = mMap.addMarker(mp);
+
+                if(prepareMap)
+                {
+                    mMap.moveCamera(center);
+                    mMap.animateCamera(zoom);
+                    prepareMap = false;
+                }
+
 
                 Log.v("Map", mp.getPosition().toString());
                 //tv1.setText(tv1.getText()+"\n"+mp.getPosition().latitude);
@@ -246,13 +260,13 @@ private void goToListActivity()
 
 //TODO
 /*
-New activity, accesable from clicking item from list, or clicking name field on map.
+New activity, accesable from clicking item from list, or clicking name field on map. DONE
 
 New activity:
 Have map, distance, and path to the location.
 Have name, which you can edit, delete button.
 
-Removing current location marker when new appeard.
+Removing current location marker when new appeard. DONE
 On map, name field, showing date when name is not set.
 
 Option to hide hour on marker.

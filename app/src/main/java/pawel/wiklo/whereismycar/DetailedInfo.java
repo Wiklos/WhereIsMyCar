@@ -1,19 +1,28 @@
 package pawel.wiklo.whereismycar;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback {
+
+    private Marker mPreviousMarker ;
+
+    boolean prepareMap = true;
 
     private GoogleMap mMap;
 
@@ -21,6 +30,8 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
     private String date;
     private Double lat;
     private Double lon;
+    private Double currLat;
+    private Double currLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,23 +71,69 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(51.125693, 20.8730044);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Current position"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng sydney = new LatLng(51.125693, 20.8730044);
+        //mMap.addMarker(new MarkerOptions().position(sydney).title("Current position"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-                MarkerOptions mp = new MarkerOptions();
+        MarkerOptions mp = new MarkerOptions();
         mp.position(new LatLng(lat, lon));
         mp.title(name);
         mp.snippet(date);
         mMap.addMarker(mp);
 
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(lat,lon));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(11);
 
-        float[] results = new float[1];
-        Location.distanceBetween(mp.getPosition().latitude, mp.getPosition().longitude,
-                51.125693, 20.8730044, results);
+        if(prepareMap)
+        {
+            mMap.moveCamera(center);
+            mMap.animateCamera(zoom);
+            prepareMap = false;
+        }
 
-        TextView tv = (TextView)findViewById(R.id.name);
-        tv.setText(""+results[0]);
+
+
+
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+
+                MarkerOptions mp = new MarkerOptions();
+
+                mp.position(new LatLng(location.getLatitude(), location.getLongitude()));
+
+                mp.title("Current Poition");
+
+                if (mPreviousMarker != null) {
+                    mPreviousMarker.remove();
+
+                }
+
+                mPreviousMarker = mMap.addMarker(mp);
+
+
+                Log.v("Map", mp.getPosition().toString());
+
+                currLat = mp.getPosition().latitude;
+                currLon = mp.getPosition().longitude;
+
+
+                float[] results = new float[1];
+                Location.distanceBetween(lat, lon,
+                        currLat, currLon, results);
+
+                TextView tv = (TextView)findViewById(R.id.name);
+                tv.setText(""+results[0]);
+                Log.v("MapReult", ""+results[0]);
+
+            }
+        });
 
 
     }
