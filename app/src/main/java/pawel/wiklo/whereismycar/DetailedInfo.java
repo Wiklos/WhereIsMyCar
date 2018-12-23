@@ -1,12 +1,16 @@
 package pawel.wiklo.whereismycar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -19,6 +23,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback {
+
+    TextView tv;
+    TextView distance;
+
+    AlertDialog alertDialog;
+    EditText editText;
 
     private Marker mPreviousMarker ;
 
@@ -53,8 +63,10 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
 
         DataBaseValues value = DataBaseValues.findById(DataBaseValues.class, id);
 
+        distance = (TextView)findViewById(R.id.distance);
 
-        TextView tv = (TextView)findViewById(R.id.name);
+
+        tv = (TextView)findViewById(R.id.name);
         tv.setText(value.getNazwa());
 
         TextView tv2 = (TextView)findViewById(R.id.date);
@@ -64,6 +76,37 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         date = value.getData();
         lat = value.getLat();
         lon = value.getLon();
+
+
+
+        alertDialog = new AlertDialog.Builder(this).create();
+        editText = new EditText(this);
+
+        alertDialog.setTitle("Set name");
+        alertDialog.setView(editText);
+
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Save name", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                tv.setText(editText.getText());
+
+                DataBaseValues value = DataBaseValues.findById(DataBaseValues.class, id);
+                value.nazwa = editText.getText().toString();
+                value.save();
+            }
+        });
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText(tv.getText());
+                alertDialog.show();
+            }
+        });
+
+
+
+
     }
 
 
@@ -102,9 +145,6 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-
-
-
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -138,8 +178,7 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
                 Location.distanceBetween(lat, lon,
                         currLat, currLon, results);
 
-                TextView tv = (TextView)findViewById(R.id.name);
-                tv.setText(""+results[0]);
+                distance.setText(""+results[0]);
                 Log.v("MapReult", ""+results[0]);
 
             }
