@@ -170,7 +170,7 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
             markers.position(new LatLng(value.getLat(), value.getLon()));
             markers.title(value.getNazwa());
             markers.snippet(value.getData());
-            googleMap.addMarker(markers);
+            googleMap.addMarker(markers).setTag(value.getId());
         }
 
 
@@ -183,11 +183,14 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 //                Toast toast = Toast.makeText(getApplicationContext(), arg0.getPosition().toString(), Toast.LENGTH_LONG);
 //                toast.show();
 
+                Log.v("MapID", " "+arg0.getTag());
+
                 Intent intent = new Intent(getApplicationContext(), DetailedInfo.class);
-                intent.putExtra("name", arg0.getTitle());
-                intent.putExtra("date", arg0.getSnippet());
-                intent.putExtra("lat", arg0.getPosition().latitude);
-                intent.putExtra("lon", arg0.getPosition().longitude);
+                intent.putExtra("Id", (Long) arg0.getTag());
+                //intent.putExtra("name", arg0.getTitle());
+                //intent.putExtra("date", arg0.getSnippet());
+                //intent.putExtra("lat", arg0.getPosition().latitude);
+                //intent.putExtra("lon", arg0.getPosition().longitude);
                 startActivity(intent);
 
 
@@ -260,14 +263,14 @@ private void goToListActivity()
 
 //TODO
 /*
-New activity, accesable from clicking item from list, or clicking name field on map. DONE
 
 New activity:
 Have map, distance, and path to the location.
 Have name, which you can edit, delete button.
 
-Removing current location marker when new appeard. DONE
 On map, name field, showing date when name is not set.
 
 Option to hide hour on marker.
+
+Widget!
 */

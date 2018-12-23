@@ -85,10 +85,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 DataBaseValues value = DataBaseValues.findById(DataBaseValues.class, item.getId());
 
                 Intent intent = new Intent(v.getContext(), DetailedInfo.class);
-                intent.putExtra("name", value.getNazwa());
-                intent.putExtra("date", value.getData());
-                intent.putExtra("lat", value.getLat());
-                intent.putExtra("lon", value.getLon());
+                //intent.putExtra("name", value.getNazwa());
+                //intent.putExtra("date", value.getData());
+                //intent.putExtra("lat", value.getLat());
+                //intent.putExtra("lon", value.getLon());
+                intent.putExtra("Id", item.getId());
                 v.getContext().startActivity(intent);
 
 //                Intent intent = new Intent(v.getContext(), DetailedInfo.class);

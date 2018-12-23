@@ -32,6 +32,7 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
     private Double lon;
     private Double currLat;
     private Double currLon;
+    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +44,26 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-         name = intent.getStringExtra("name");
-         date = intent.getStringExtra("date");
-         lat = intent.getDoubleExtra("lat",0.0);
-         lon = intent.getDoubleExtra("lon",0.0);
+         //name = intent.getStringExtra("name");
+         //date = intent.getStringExtra("date");
+         //lat = intent.getDoubleExtra("lat",0.0);
+         //lon = intent.getDoubleExtra("lon",0.0);
+
+         id = intent.getLongExtra("Id",0);
+
+        DataBaseValues value = DataBaseValues.findById(DataBaseValues.class, id);
 
 
         TextView tv = (TextView)findViewById(R.id.name);
-        tv.setText(name);
+        tv.setText(value.getNazwa());
 
         TextView tv2 = (TextView)findViewById(R.id.date);
-        tv2.setText(date+"\n"+lat+"\n"+lon);
+        tv2.setText(value.getData()+"\n"+value.getLat()+"\n"+value.getLat());
+
+        name = value.getNazwa();
+        date = value.getData();
+        lat = value.getLat();
+        lon = value.getLon();
     }
 
 
