@@ -265,8 +265,10 @@ private void goToListActivity()
 /*
 
 New activity:
-Have map, distance, and path to the location.
-Have name, which you can edit, delete button.
+Have map, distance, and path to the location. DONE
+    location - not done
+Have name, which you can edit, delete button. DONE
+    delete - not done
 
 On map, name field, showing date when name is not set.
 
