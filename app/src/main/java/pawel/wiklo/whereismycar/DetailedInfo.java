@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,8 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
+
+    ImageButton editButton;
 
     boolean drawPath = false;
 
@@ -97,6 +100,7 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        editButton = findViewById(R.id.editButton);
 
 
         Intent intent = getIntent();
@@ -115,8 +119,8 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         tv = (TextView)findViewById(R.id.name);
         tv.setText(value.getNazwa());
 
-        TextView tv2 = (TextView)findViewById(R.id.date);
-        tv2.setText(value.getData()+"\n"+value.getLat()+"\n"+value.getLat());
+        //TextView tv2 = (TextView)findViewById(R.id.date);
+        //tv2.setText(value.getData());
 
         name = value.getNazwa();
         date = value.getData();
@@ -142,17 +146,19 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        tv.setOnClickListener(new View.OnClickListener() {
+//        tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editText.setText(tv.getText());
                 alertDialog.show();
             }
         });
-
-
-
-
     }
 
     /**
@@ -232,7 +238,7 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
                 Location.distanceBetween(lat, lon,
                         currLat, currLon, results);
 
-                distance.setText(""+results[0]);
+                distance.setText("Distance: "+results[0]);
                 Log.v("MapReult", ""+results[0]);
 
 

@@ -26,12 +26,12 @@ public class ListOfAll extends AppCompatActivity {
         SugarContext.init(this);
         List<DataBaseValues> myList = DataBaseValues.listAll(DataBaseValues.class);
 
-        TextView tv = (TextView)findViewById(R.id.textView);
-
-        for (DataBaseValues value : myList)
-        {
-            tv.setText(tv.getText()+"\n"+value.getData()+" "+value.getLat()+" "+value.getLon());
-        }
+//        TextView tv = (TextView)findViewById(R.id.textView);
+//
+//        for (DataBaseValues value : myList)
+//        {
+//            tv.setText(tv.getText()+"\n"+value.getData()+" "+value.getLat()+" "+value.getLon());
+//        }
 
 
                 List<DataBaseValues> notes = DataBaseValues.listAll(DataBaseValues.class);

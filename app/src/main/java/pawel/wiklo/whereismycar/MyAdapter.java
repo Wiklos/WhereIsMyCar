@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,14 +29,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView txtLon;
         public View layout;
 
+        public ImageButton rightArrowImageButton;
+
         public ViewHolder(View v) {
             super(v);
             layout = v;
             txtDate = (TextView) v.findViewById(R.id.date);
             txtName = (TextView) v.findViewById(R.id.name);
-            txtId = (TextView) v.findViewById(R.id.id);
-            txtLat = (TextView) v.findViewById(R.id.lat);
-            txtLon = (TextView) v.findViewById(R.id.lon);
+            //txtId = (TextView) v.findViewById(R.id.id);
+            //txtLat = (TextView) v.findViewById(R.id.lat);
+            //txtLon = (TextView) v.findViewById(R.id.lon);
+
+            rightArrowImageButton = v.findViewById(R.id.rightArrowImageButton);
         }
     }
 
@@ -76,31 +81,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         final String name = String.valueOf(values.get(position));
         final DataBaseValues item = values.get(position);
         holder.txtDate.setText(item.getData());
-        holder.txtDate.setOnClickListener(new View.OnClickListener() {
+        holder.rightArrowImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 //remove(position);
 
 
                 DataBaseValues value = DataBaseValues.findById(DataBaseValues.class, item.getId());
 
-                Intent intent = new Intent(v.getContext(), DetailedInfo.class);
+                Intent intent = new Intent(view.getContext(), DetailedInfo.class);
                 //intent.putExtra("name", value.getNazwa());
                 //intent.putExtra("date", value.getData());
                 //intent.putExtra("lat", value.getLat());
                 //intent.putExtra("lon", value.getLon());
                 intent.putExtra("Id", item.getId());
-                v.getContext().startActivity(intent);
+                view.getContext().startActivity(intent);
 
 //                Intent intent = new Intent(v.getContext(), DetailedInfo.class);
 //
 //                v.getContext().startActivity(intent);
             }
         });
-        holder.txtName.setText("Name: " + item.getNazwa());
-        holder.txtId.setText("Id: " + item.getId());
-        holder.txtLat.setText("Lat: " + item.getLat());
-        holder.txtLon.setText("Lon: " + item.getLon());
+        holder.txtName.setText(item.getNazwa());
+        //holder.txtId.setText("Id: " + item.getId());
+        //holder.txtLat.setText("Lat: " + item.getLat());
+        //holder.txtLon.setText("Lon: " + item.getLon());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
