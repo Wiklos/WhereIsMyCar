@@ -119,14 +119,12 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 MarkerOptions mp = new MarkerOptions();
 
-
                 mp.position(new LatLng(location.getLatitude(), location.getLongitude()));
 
                 mp.title("Current Poition");
 
                 if (mPreviousMarker != null) {
                     mPreviousMarker.remove();
-
                 }
 
                 mPreviousMarker = mMap.addMarker(mp);
@@ -193,8 +191,6 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
                 //intent.putExtra("lon", arg0.getPosition().longitude);
                 startActivity(intent);
 
-
-
             }
         });
 
@@ -239,12 +235,13 @@ public class StartActivity extends FragmentActivity implements OnMapReadyCallbac
         Date date = new Date();
         System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
 
-//        Toast toast = Toast.makeText(this, dateFormat.format(date), Toast.LENGTH_LONG);
-//        toast.show();
+        Toast toast = Toast.makeText(this, dateFormat.format(date), Toast.LENGTH_LONG);
+        toast.show();
 
-//        SugarContext.init(this);
-//        DataBaseValues dbv = new DataBaseValues(51.1256500,20.8759,dateFormat.format(date),"Testowy2");
-//        dbv.save();
+        SugarContext.init(this);
+        //DataBaseValues dbv = new DataBaseValues(51.1256500,20.8759,dateFormat.format(date),"Nazwa");
+        DataBaseValues dbv = new DataBaseValues(lat,lon,dateFormat.format(date),"Nazwa");
+        dbv.save();
 
 
         //Toast toast = Toast.makeText(this, dbv.getLat()+" - "+dbv.getLon()+" - "+dbv.getNazwa()+" - "+dbv.getData()+" - "+dbv.getId(), Toast.LENGTH_LONG);
@@ -263,16 +260,11 @@ private void goToListActivity()
 
 //TODO
 /*
-
-New activity:
-Have map, distance, and path to the location. DONE
-    location - not done
-Have name, which you can edit, delete button. DONE
-    delete - not done
-
-On map, name field, showing date when name is not set.
-
-Option to hide hour on marker.
+delete from db
+widget
+option to hide hour on marker
+marker colors
+show only date if name not set
 
 Widget!
 */

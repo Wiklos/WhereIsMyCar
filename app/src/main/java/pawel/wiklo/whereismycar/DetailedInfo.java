@@ -288,7 +288,7 @@ public class DetailedInfo extends FragmentActivity implements OnMapReadyCallback
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "KEY";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyDixUmKv8lOvOs0NnhG0lVuBxe3TrlIUmU \t";
 
         return url;
     }
